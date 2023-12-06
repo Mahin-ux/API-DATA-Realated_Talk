@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <h1>What is JSON</h1>
+     <h1>JavaScript Object Notation</h1>
+    <ul id="users-container">
+    </ul>
+
+
+    <input type="text" id="input1" placeholder="Type Your Name">
+    <br>
+    <br>
+    <br>
+    <input type="text" id="input2" placeholder="Type Your Id Number">
+    <br>
+    <br>
+    <br>
+    <button id="Submit">
+        Submit
+    </button>
+
+
+     <script>
+        document.getElementById("Submit").addEventListener("click", function(){
+        
+        const input1 = document.getElementById("input1").value;
+        const input2 = document.getElementById("input2").value;
+
+        const Input = {title: input1, body: input2 };
+
+        nowPostToServer(Input);
+        })
+
+        function nowPostToServer(postInfo){
+            
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: 'POST',
+                body: JSON.stringify(postInfo),
+        headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                },
+             })
+            .then((response) => response.json())
+            .then((data) => console.log(data));
+        }
+
+
+        function displayUser(users){
+            
+            const userNames = users.map(user => user.username);
+            const ul = document.getElementById("users-container");
+            
+            for(i = 0; i < userNames.length; i++){
+                const username = userNames[i];
+                const li = document.createElement("li");
+                li.innerText = username;
+                ul.appendChild(li);
+            };
+        };
+     </script>
+</body>
+</html>
